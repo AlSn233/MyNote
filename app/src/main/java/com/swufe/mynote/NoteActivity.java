@@ -1,6 +1,5 @@
 package com.swufe.mynote;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,21 +12,20 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.swufe.mynote.adapter.NotepadAdapter;
-import com.swufe.mynote.bean.NotepadBean;
+
+import com.swufe.mynote.adapter.NoteAdapter;
+import com.swufe.mynote.bean.NoteBean;
 import com.swufe.mynote.database.SQLiteHelper;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
 
-public class NotepadActivity extends AppCompatActivity {
+public class NoteActivity extends AppCompatActivity {
     private ListView listView;
-    private SQLiteHelper mSQLiteHelper;
-    private List<NotepadBean> list;
-    NotepadAdapter adapter;
+    private SQLiteHelper mySQLiteHelper;
+    private List<NoteBean> list;
+    NoteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,41 +37,41 @@ public class NotepadActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(NotepadActivity.this,RecordActivity.class);
+                Intent intent=new Intent(NoteActivity.this,RecordActivity.class);
                 startActivityForResult(intent,1);
             }
         });
     }
     public void initData(){
-        mSQLiteHelper=new SQLiteHelper(this);
+        mySQLiteHelper =new SQLiteHelper(this);
         showQueryData();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
-                NotepadBean notepadBean=list.get(position);
-                Intent intent=new Intent(NotepadActivity.this,RecordActivity.class);
-                intent.putExtra("id",notepadBean.getId());
-                intent.putExtra("head",notepadBean.getNotepadHead());
-                intent.putExtra("content",notepadBean.getNotepadContent());
-                intent.putExtra("time",notepadBean.getNotepadTime());
+                NoteBean nb=list.get(position);
+                Intent intent=new Intent(NoteActivity.this,RecordActivity.class);
+                intent.putExtra("id",nb.getNote_id());
+                intent.putExtra("head",nb.getNote_Head());
+                intent.putExtra("content",nb.getNote_Content());
+                intent.putExtra("time",nb.getNote_Time());
                 //intent.putExtra("time",getNowTime());
-                NotepadActivity.this.startActivityForResult(intent,1);
+                NoteActivity.this.startActivityForResult(intent,1);
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog dialog;
-                AlertDialog.Builder builder=new AlertDialog.Builder(NotepadActivity.this)
+                AlertDialog.Builder builder=new AlertDialog.Builder(NoteActivity.this)
                         .setMessage("是否删除此记录?")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                NotepadBean notepadBean=list.get(position);
-                                if(mSQLiteHelper.deleteData(notepadBean.getId())){
+                                NoteBean notepadBean=list.get(position);
+                                if(mySQLiteHelper.DeleteData(notepadBean.getNote_id())){
                                     list.remove(position);
                                     adapter.notifyDataSetChanged();
-                                    Toast.makeText(NotepadActivity.this,"删除成功", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(NoteActivity.this,"删除成功", Toast.LENGTH_LONG).show();
                                 }
 
                             }
@@ -91,20 +89,20 @@ public class NotepadActivity extends AppCompatActivity {
     });
 }
 
-    String getNowTime(){
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        return simpleDateFormat.format(date);
-    }
+//    String getNowTime(){
+//        @SuppressLint("SimpleDateFormat")
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+//        //获取当前时间
+//        Date date = new Date(System.currentTimeMillis());
+//        return simpleDateFormat.format(date);
+//    }
 
     private void showQueryData(){
         if(list!=null){
             list.clear();
         }
-        list=mSQLiteHelper.query();
-        adapter=new NotepadAdapter(this,list);
+        list= mySQLiteHelper.query();
+        adapter=new NoteAdapter(this,list);
         listView.setAdapter(adapter);
     }
     @Override

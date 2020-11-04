@@ -10,7 +10,9 @@
         android:id="@+id/item_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         />
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="#3A3635"/>
 
     <TextView
         android:id="@+id/item_content"

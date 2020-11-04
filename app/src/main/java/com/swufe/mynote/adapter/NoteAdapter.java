@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.swufe.mynote.R;
-import com.swufe.mynote.bean.NotepadBean;
+import com.swufe.mynote.bean.NoteBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,10 +17,10 @@ import java.util.List;
 
 
 
-public class NotepadAdapter extends BaseAdapter {
+public class NoteAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;//这个对象用于加载item的布局文件
-    private List<NotepadBean> list;//list集合是列表中需要显示的集合
-    public NotepadAdapter(Context context, List<NotepadBean> list){
+    private List<NoteBean> list;//list集合是列表中需要显示的集合
+    public NoteAdapter(Context context, List<NoteBean> list){
         layoutInflater= LayoutInflater.from(context);
         this.list=list;
     }
@@ -49,29 +49,29 @@ public class NotepadAdapter extends BaseAdapter {
         }else {
             viewHolder=(ViewHolder) convertView.getTag();
         }
-        NotepadBean notepadBean=(NotepadBean)getItem(position);
-        viewHolder.tvNotepadHead.setText(notepadBean.getNotepadHead());
-        viewHolder.tvNotepadContent.setText(notepadBean.getNotepadContent());
-        viewHolder.tvNotepadTime.setText(notepadBean.getNotepadTime());
+        NoteBean noteBean =(NoteBean)getItem(position);
+        viewHolder.tvNote_Head.setText(noteBean.getNote_Head());
+        viewHolder.tvNote_Content.setText(noteBean.getNote_Content());
+        viewHolder.tvNote_Time.setText(noteBean.getNote_Time());
         //viewHolder.tvNotepadTime.setText(getNowTime());
         return convertView;
     }
     class ViewHolder{
-        TextView tvNotepadHead;
-        TextView tvNotepadContent;
-        TextView tvNotepadTime;
+        TextView tvNote_Head;
+        TextView tvNote_Content;
+        TextView tvNote_Time;
         public ViewHolder(View view){
-            tvNotepadHead=view.findViewById(R.id.item_head);
-            tvNotepadContent=view.findViewById(R.id.item_content);//记录的内容
-            tvNotepadTime=view.findViewById(R.id.item_time);//保存记录的时间
+            tvNote_Head =view.findViewById(R.id.item_head);
+            tvNote_Content =view.findViewById(R.id.item_content);//记录的内容
+            tvNote_Time =view.findViewById(R.id.item_time);//保存记录的时间
 
         }
     }
-    String getNowTime(){
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-        //获取当前时间
-        Date date = new Date(System.currentTimeMillis());
-        return simpleDateFormat.format(date);
-    }
+//    String getNowTime(){
+//        @SuppressLint("SimpleDateFormat")
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+//        //获取当前时间
+//        Date date = new Date(System.currentTimeMillis());
+//        return simpleDateFormat.format(date);
+//    }
 }

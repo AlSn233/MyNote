@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">My Note</string>
+    <string name="head_content">please input the head</string>
+    <string name="note_content">please input the content</string>
+    <string name="head">head:</string>
+    <string name="note_name">具体内容</string>
+    <string name="Note">便签</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Note</string>
+    <string name="head_content">请输入标题</string>
+    <string name="note_content">请输入内容</string>
+    <string name="head">标题：</string>
+    <string name="note_name">具体内容</string>
+    <string name="Note">便签</string>
+</resources>
