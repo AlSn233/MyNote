@@ -15,7 +15,7 @@ import com.swufe.mynote.database.SQLiteHelper;
 import com.swufe.mynote.utils.DBUtils;
 
 
-public class RecordActivity extends AppCompatActivity implements View.OnClickListener{
+public class DetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView note_time;
     EditText note_content;
@@ -31,14 +31,14 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
+        setContentView(R.layout.activity_details);
         note_name = findViewById(R.id.note_name);//标题的名称
-        note_time= findViewById(R.id.tv_time);//保存记录的时间
+        note_time= findViewById(R.id.tv_time);//保存内容的时间
         note_head = findViewById(R.id.head_content);//标题内容
-        note_content = findViewById(R.id.note_content);//记录的内容
+        note_content = findViewById(R.id.note_content);//便签的具体内容
         note_delete = findViewById(R.id.delete);//清空的按钮
         note_save= findViewById(R.id.note_save);//保存的按钮
-        note_back= findViewById(R.id.note_back);//后退键
+        note_back= findViewById(R.id.note_back);//返回键
 
         note_delete.setOnClickListener(this);
         note_save.setOnClickListener(this);
@@ -46,7 +46,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         Note_ShowContent();
 
     }
-    public void Note_ShowContent(){
+    public void Note_ShowContent(){       //显示添加界面还是修改界面
         mSQLiteHelper=new SQLiteHelper(this);
         note_name.setText("具体内容");
         Intent intent=getIntent();
@@ -107,6 +107,6 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     }
     }
     public void showToast(String message){
-        Toast.makeText(RecordActivity.this,message, Toast.LENGTH_LONG).show();
+        Toast.makeText(DetailsActivity.this,message, Toast.LENGTH_LONG).show();
     }
 }

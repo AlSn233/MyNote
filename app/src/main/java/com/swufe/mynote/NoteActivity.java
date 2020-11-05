@@ -32,24 +32,35 @@ public class NoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView=findViewById(R.id.listview);
-        ImageView imageView=findViewById(R.id.add);
-        initData();
-        imageView.setOnClickListener(new View.OnClickListener() {
+        ImageView iv=findViewById(R.id.add);
+        Show();
+        //图片点击事件监听
+        iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(NoteActivity.this,RecordActivity.class);
+                Intent intent=new Intent(NoteActivity.this, DetailsActivity.class);
                 startActivityForResult(intent,1);
             }
         });
     }
-    public void initData(){
+
+    private void showQueryData(){
+        if(list!=null){
+            list.clear();
+        }
+        list= mySQLiteHelper.QueryData();
+        adapter=new NoteAdapter(this,list);
+        listView.setAdapter(adapter);
+    }
+
+    public void Show(){
         mySQLiteHelper =new SQLiteHelper(this);
         showQueryData();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
                 NoteBean nb=list.get(position);
-                Intent intent=new Intent(NoteActivity.this,RecordActivity.class);
+                Intent intent=new Intent(NoteActivity.this, DetailsActivity.class);
                 intent.putExtra("id",nb.getNote_id());
                 intent.putExtra("head",nb.getNote_Head());
                 intent.putExtra("content",nb.getNote_Content());
@@ -58,6 +69,7 @@ public class NoteActivity extends AppCompatActivity {
                 NoteActivity.this.startActivityForResult(intent,1);
             }
         });
+        //长按便签删除
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -97,14 +109,7 @@ public class NoteActivity extends AppCompatActivity {
 //        return simpleDateFormat.format(date);
 //    }
 
-    private void showQueryData(){
-        if(list!=null){
-            list.clear();
-        }
-        list= mySQLiteHelper.query();
-        adapter=new NoteAdapter(this,list);
-        listView.setAdapter(adapter);
-    }
+
     @Override
     protected  void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);

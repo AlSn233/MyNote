@@ -11,8 +11,7 @@ import android.widget.TextView;
 import com.swufe.mynote.R;
 import com.swufe.mynote.bean.NoteBean;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.List;
 
 

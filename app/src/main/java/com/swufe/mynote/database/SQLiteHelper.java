@@ -55,13 +55,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     //删除数据
     public boolean DeleteData(String id){
         String sql=DBUtils.NOTEPAD_ID+"=?";
-        //连接字符串，易错点!
+        //连接字符串
         String[] contentValuesArray=new String[]{String.valueOf(id)};
         return sqLiteDatabase.delete(DBUtils.DATABASE_TABLE,sql,contentValuesArray)>0;
     }
 
     //查询数据
-    public List<NoteBean> query(){
+    public List<NoteBean> QueryData(){
         List<NoteBean> list=new ArrayList<NoteBean>();
         Cursor cursor=sqLiteDatabase.query(DBUtils.DATABASE_TABLE,null,null,
                 null,null,null,DBUtils.NOTEPAD_ID+" desc");
